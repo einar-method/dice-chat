@@ -71,7 +71,7 @@
 
     <ul class="item-a" id="messages"></ul>
     <form class="item-c" id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
+        <input id="input" autocomplete="off" /><button id="na">Send</button>
     </form>
 
   <div class="item-b">
@@ -109,10 +109,15 @@
     const allBtns = document.querySelectorAll('button');
     
     allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
-      btnCalled = rollDice(e.target.id);
-      //const clientOffset = `${socket.id}-${counter++}`;
-      socket.emit('chat message', btnCalled.toString(), clientOffset);
-    }))
+      if (e.target.id === "na") {
+        // do nothing if form btn
+        // console.log("caught")
+      } else {
+          btnCalled = rollDice(e.target.id);
+          const clientOffset = `${socket.id}-${counter++}`;
+          socket.emit('chat message', btnCalled.toString(), clientOffset);
+        }
+    }));
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
