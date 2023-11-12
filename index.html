@@ -100,15 +100,18 @@
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
 
-    let btnCalled
+    let btnCalled;
+    
     function rollDice(num) {
         return Math.floor(Math.random() * num + 1)
-    }
-    const allBtns = document.querySelectorAll('button')
+    };
+    
+    const allBtns = document.querySelectorAll('button');
+    
     allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
-    btnCalled = rollDice(e.target.id)
-    const clientOffset = `${socket.id}-${counter++}`;
-    socket.emit('chat message', btnCalled, clientOffset);
+      btnCalled = rollDice(e.target.id)
+      const clientOffset = `${socket.id}-${counter++}`;
+      socket.emit('chat message', btnCalled.value, clientOffset);
     }))
 
     form.addEventListener('submit', (e) => {
