@@ -127,6 +127,7 @@
           btnCalled = rollDice(e.target.id);
           const clientOffset = `${socket.id}-${counter++}`;
           socket.emit('chat message', btnCalled.toString(), clientOffset);
+          messages.scrollTo(0, messages.scrollHeight);
         }
     }));
 
