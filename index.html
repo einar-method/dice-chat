@@ -297,12 +297,16 @@ loginButton.addEventListener("click", (e) => {
     const username = loginForm.username.value;
     const password = loginForm.password.value;
 
-    if (username === "will" && password === "vikings") {
+    if (username === "will" && password === "vikings" || username === "nana" && password === "vikings" || username === "falco" && password === "vikings" || username === "cj" && password === "vikings") {
         // If the credentials are valid, show dice app
         console.log("You have successfully logged in.");
         titleCanvas.style.opacity = "0";
         titleCanvas.style.zIndex = "-99";
         mainBox.style.display = "none";
+      let loginMsg = username + " has logged in"
+      const clientOffset = `${socket.id}-${counter++}`;
+          socket.emit('chat message', loginMsg, clientOffset);
+          messages.scrollTo(0, messages.scrollHeight);
     } else {
         // Otherwise, make the login error message show (change its oppacity)
         loginErrorMsg.style.opacity = 1;
