@@ -110,7 +110,7 @@
     
     allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
       btnCalled = rollDice(e.target.id);
-      input.value = btnCalled;
+      input.value = btnCalled.toString();
       // const clientOffset = `${socket.id}-${counter++}`;
       // socket.emit('chat message', btnCalled.toString(), clientOffset);
     }))
