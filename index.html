@@ -109,9 +109,10 @@
     const allBtns = document.querySelectorAll('button');
     
     allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
-      btnCalled = rollDice(e.target.id)
-      const clientOffset = `${socket.id}-${counter++}`;
-      socket.emit('chat message', btnCalled.toString(), clientOffset);
+      btnCalled = rollDice(e.target.id);
+      input.value = btnCalled;
+      // const clientOffset = `${socket.id}-${counter++}`;
+      // socket.emit('chat message', btnCalled.toString(), clientOffset);
     }))
 
     form.addEventListener('submit', (e) => {
