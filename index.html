@@ -7,113 +7,107 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
     
-    html{ height: 100%; }
+    html{ height: 100vh; }
+
+    * { font-family: Skranji, sans-serif; }
     
     body { 
-        margin: 0; 
-        width: 100vw;
-        height: 100vh;
-        font-family: Skranji, sans-serif; 
-        overflow: hidden;
+      background-color: #333;
+      margin: 0; 
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    canvas {
-        /* background: transparent; */
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #333;
-        z-index: 1;
-        /* opacity: 1; */
-    }
-    #main-holder {
-        position: absolute;
-        top: 10%;
-        left: 10%;
-        width: 80%;
-        height: 80%;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-        background-color: white;
-        border-radius: 7px;
-        box-shadow: 0px 0px 5px 2px black;
-        z-index: 2;
+    #login-box {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      background-color: whitesmoke;
+      border-radius: 7px;
+      box-shadow: 0px 0px 5px 2px black;
+      z-index: 2;
     }
 
     .item-a { grid-area: msg; }
     .item-b { 
-        grid-area: btns;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto; 
-        background-color: #333; 
-        margin: 0;
-        padding: 10px;
-        row-gap: 10px; 
+      grid-area: btns;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto; 
+      background-color: #333;
+      margin: 0;
+      padding: 10px;
+      row-gap: 10px; 
     }
     .item-c { grid-area: form; }
 
     button { font-family: Skranji, sans-serif; font-size: 5vmin; }
 
     #box { 
-        height: 100vh; 
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 10%;
-        grid-template-areas: 
-            "msg btns"
-            "msg btns"
-            "form form";
-        }
+      background-color: whitesmoke;
+      height: 100vh; 
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 10%;
+      grid-template-areas: 
+          "msg btns"
+          "msg btns"
+          "form form";
+    }
 
     #form { 
-        background: rgba(0, 0, 0, 0.15); 
-        padding: 0.25rem;  
-        display: flex; 
-        height: auto; 
-        box-sizing: border-box; 
-        backdrop-filter: blur(10px); 
+      background: rgba(0, 0, 0, 0.15); 
+      padding: 0.25rem;  
+      display: flex; 
+      height: auto; 
+      box-sizing: border-box; 
+      backdrop-filter: blur(10px); 
     }
     
     #input { 
-        width: 80%; 
-        border: none; 
-        padding: 0 1rem; 
-        border-radius: 2rem; 
-        margin: 0.25rem; 
-        font-size: 3vmin;
+      width: 80%; 
+      border: none; 
+      padding: 0 1rem; 
+      border-radius: 2rem; 
+      margin: 0.25rem; 
+      font-size: 3vmin;
     }
 
     #input:focus { outline: none; }
     
     #form > button { 
-        background: #333; 
-        border: none; 
-        width: 20%;
-        padding: 0 1rem; 
-        margin: 0.25rem; 
-        border-radius: 3px;
-        font-size: 4vmin; 
-        outline: none; 
-        color: #fff; 
+      background: #333; 
+      border: none; 
+      width: 20%;
+      padding: 0 1rem; 
+      margin: 0.25rem; 
+      border-radius: 3px;
+      font-size: 4vmin; 
+      outline: none; 
+      color: #fff; 
     }
 
     #messages { 
-        overflow: scroll; 
-        list-style-type: none; 
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        margin: 0; 
-        padding: 0; 
+      overflow: scroll; 
+      list-style-type: none; 
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      margin: 0; 
+      padding: 0; 
     }
     #messages > li { padding: 0.5rem; font-size: 3vmin;}
-    #messages > li:nth-child(odd) { background: #efefef; }
+    #messages > li:nth-child(odd) { 
+      background: #676262; 
+      color: whitesmoke;
+    }
   
-  /* Middle row of the main grid (contains the error message) */
-  
+  /* Contains the error message */
   #login-error-msg-holder {
     width: 100%;
     height: 100%;
@@ -124,7 +118,6 @@
   
   /* Error message. By default it's transparent, but the opacity is controlled
   by JavaScript */
-  
   #login-error-msg {
     width: 23%;
     text-align: center;
@@ -144,54 +137,45 @@
   
   /* Adjust the positioning of the login form inside the last row of the
   main grid */
-  
   #login-form {
     align-self: flex-start;
     display: grid;
     justify-items: center;
     align-items: center;
-    z-index: 2;
   }
   
   /* Style the login form fields' placeholders */
-  
   .login-form-field::placeholder {
     color: #3a3a3a;
   }
   
   /* Style the login form fields (username and password) */
-  
   .login-form-field {
+    background-color: whitesmoke;
     border: none;
     border-bottom: 1px solid #3a3a3a;
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
     padding: 0px 0px 5px 5px;
-    z-index: 2;
   }
   
   /* Style the login button */
-  
   #login-form-submit {
     width: 100%;
     padding: 7px;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: whitesmoke;
     font-weight: bold;
     background-color: #3a3a3a;
     cursor: pointer;
     outline: none;
-    z-index: 2;
   }
-
-  * { font-family: Skranji, sans-serif; }
-
   </style>
 </head>
 <body>
-  <main id="main-holder">
+  <main id="login-box">
     <h1 id="login-header">Login</h1>
     
     <div id="login-error-msg-holder">
@@ -203,15 +187,13 @@
       <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
       <input type="submit" value="Login" id="login-form-submit">
     </form>
-  
   </main>
-  <canvas id="myCanvas"></canvas>
-    <div id="box">
+  <div id="box">
 
-    <ul class="item-a" id="messages"></ul>
-    <form class="item-c" id="form" action="">
-        <input id="input" autocomplete="off" /><button id="na">Send</button>
-    </form>
+  <ul class="item-a" id="messages"></ul>
+  <form class="item-c" id="form" action="">
+      <input id="input" autocomplete="off" /><button id="na">Send</button>
+  </form>
 
   <div class="item-b">
     <button id="100">100</button>
@@ -223,94 +205,94 @@
     <button id="4">4</button>
   </div>
 </div>
+  
 <script src="/socket.io/socket.io.js"></script>
-  <script>
-    let counter = 0;
+<script>
+  let counter = 0;
 
-    const socket = io({
-      auth: {
-        serverOffset: 0
-      },
-      ackTimeout: 10000,
-      retries: 3,
-    });
+  const socket = io({
+    auth: {
+      serverOffset: 0
+    },
+    ackTimeout: 10000,
+    retries: 3,
+  });
 
-    const form = document.getElementById('form');
-    const input = document.getElementById('input');
-    const messages = document.getElementById('messages');
+  const form = document.getElementById('form');
+  const input = document.getElementById('input');
+  const messages = document.getElementById('messages');
 
-    let btnCalled;
-    
-    function rollDice(num) {
-        return Math.floor(Math.random() * num + 1)
-    };
-    
-    const allBtns = document.querySelectorAll('button');
-    
-    allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
-      if (e.target.id === "na") {
-        // do nothing if form btn
-        // console.log("caught")
-      } else {
-          btnCalled = rollDice(e.target.id);
-          const clientOffset = `${socket.id}-${counter++}`;
-          socket.emit('chat message', btnCalled.toString(), clientOffset);
-          messages.scrollTo(0, messages.scrollHeight);
-        }
-    }));
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (input.value) {
+  let btnCalled;
+  
+  function rollDice(num) {
+      return Math.floor(Math.random() * num + 1)
+  };
+  
+  const allBtns = document.querySelectorAll('button');
+  
+  allBtns.forEach(clickedBtn => clickedBtn.addEventListener('click', (e) => {
+    if (e.target.id === "na") {
+      // do nothing if form btn
+      // console.log("caught")
+    } else {
+        btnCalled = rollDice(e.target.id);
+      diceMsg =  activeUser + " rolled " + btnCalled.toString()
         const clientOffset = `${socket.id}-${counter++}`;
-        socket.emit('chat message', input.value, clientOffset);
-        input.value = '';
+        socket.emit('chat message', diceMsg, clientOffset);
+        messages.scrollTo(0, messages.scrollHeight);
       }
-    });
+  }));
 
-    socket.on('chat message', (msg, serverOffset) => {
-      const item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
-      messages.scrollTo(0, messages.scrollHeight);
-      //window.scrollTo(0, document.body.scrollHeight);
-      socket.auth.serverOffset = serverOffset;
-    });
-    
-    // added new stuff here
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value) {
+      const clientOffset = `${socket.id}-${counter++}`;
+      socket.emit('chat message', input.value, clientOffset);
+      input.value = '';
+    }
+  });
+
+  socket.on('chat message', (msg, serverOffset) => {
+    const item = document.createElement('li');
+    item.textContent = msg;
+    messages.appendChild(item);
+    messages.scrollTo(0, messages.scrollHeight);
+    //window.scrollTo(0, document.body.scrollHeight);
+    socket.auth.serverOffset = serverOffset;
+  });
+  
+  // added new stuff here
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 
-const mainBox = document.getElementById("main-holder")
+const mainBox = document.getElementById("login-box");
+const container = document.getElementById("box");
 
-const titleCanvas = document.getElementById('myCanvas');
-let titleCtx = titleCanvas.getContext('2d');
-titleCanvas.width = window.innerWidth;
-titleCanvas.height = window.innerHeight;
+let activeUser = "";
 
 // When the login button is clicked, the following code is executed
 loginButton.addEventListener("click", (e) => {
-    // Prevent the default submission of the form
-    e.preventDefault();
-    // Get the values input by the user in the form fields
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
+  // Prevent the default submission of the form
+  e.preventDefault();
+  // Get the values input by the user in the form fields
+  const username = loginForm.username.value;
+  const password = loginForm.password.value;
 
-    if (username === "will" && password === "vikings" || username === "nana" && password === "vikings" || username === "falco" && password === "vikings" || username === "cj" && password === "vikings") {
-        // If the credentials are valid, show dice app
-        console.log("You have successfully logged in.");
-        titleCanvas.style.opacity = "0";
-        titleCanvas.style.zIndex = "-99";
-        mainBox.style.display = "none";
+  if (username === "will" && password === "vikings" || username === "nana" && password === "vikings" || username === "falco" && password === "vikings" || username === "cj" && password === "vikings") {
+      // If the credentials are valid, show dice app
+      console.log(username + " has successfully logged in.");
+      loginBox.style.display = "none";
+      container.style.display = "grid";
+      activeUser = username;
       let loginMsg = username + " has logged in"
       const clientOffset = `${socket.id}-${counter++}`;
-          socket.emit('chat message', loginMsg, clientOffset);
-          messages.scrollTo(0, messages.scrollHeight);
-    } else {
-        // Otherwise, make the login error message show (change its oppacity)
-        loginErrorMsg.style.opacity = 1;
-    }
+      socket.emit('chat message', loginMsg, clientOffset);
+      messages.scrollTo(0, messages.scrollHeight);
+  } else {
+      // Otherwise, make the login error message show (change its oppacity)
+      loginErrorMsg.style.opacity = 1;
+  }
 })
 
   </script>
